@@ -1,8 +1,8 @@
-import cv2
+2import cv2
 import numpy as np
 
 # For OpenCV2 image display
-WINDOW_NAME = 'GreenBallTracker' 
+WINDOW_NAME = 'BarbellTracker' 
 
 def track(image):
 
@@ -45,7 +45,8 @@ def track(image):
         ctr = (centroid_x, centroid_y)
 
         # Put black circle in at centroid in image
-        cv2.circle(image, ctr, 4, (0,0,0))
+        cv2.circle(image, ctr, 5, (0,0,0))
+
 
     # Display full-color image
     cv2.imshow(WINDOW_NAME, image)
@@ -53,9 +54,9 @@ def track(image):
     # Force image display, setting centroid to None on ESC key input
     if cv2.waitKey(1) & 0xFF == 27:
         ctr = None
-    
+
     # Return coordinates of centroid
-    return ctr
+    return centroid_x
 
 # Test with input from camera
 if __name__ == '__main__':
@@ -68,9 +69,11 @@ if __name__ == '__main__':
 
         if okay:
 
-            if not track(image):
-                break
-          
+            c_x = track(image)
+            
+            if track(image) != c_x:
+                print "\a"
+                  
             if cv2.waitKey(1) & 0xFF == 27:
                 break
 
